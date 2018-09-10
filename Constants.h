@@ -9,6 +9,7 @@
   #define WINDOW_TITLE        "Sokoban"
 
   #define STATIC_MAX_NUMBER     100
+  #define DYNAMIC_MAX_NUMBER    100
 
   enum directions { UP,DOWN,LEFT,RIGHT };
   enum block_type { WALL,BOX,GOAL,PLAYER,EMPTY };

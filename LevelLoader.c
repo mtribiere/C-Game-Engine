@@ -5,11 +5,12 @@
 
 
 //Load a level by ID
-void LoadLevel(int id,SDL_Surface *screen,SDL_Rect *playerPos,SDL_Rect *staticObjects,int *staticObjectsCount){
+void LoadLevel(int id,SDL_Surface *screen,SDL_Rect *playerPos,SDL_Rect *staticObjects,int *staticObjectsCount,SDL_Rect *dynamicObjects,int *dynamicObjectsCount){
 
   FILE* levelFile = NULL;
   int currentChar = 0;
   int currentWallId = 0;
+  int currentBoxId = 0;
   SDL_Rect currentBlockPos;
 
   currentBlockPos.x = 0;
@@ -23,15 +24,26 @@ void LoadLevel(int id,SDL_Surface *screen,SDL_Rect *playerPos,SDL_Rect *staticOb
     do{
       currentChar = fgetc(levelFile);
 
+      //BOX
+      if(currentChar == BOX+'0'){
+        SDL_Surface *tempBox = IMG_Load("box_movable.png");
+        SDL_BlitSurface(tempBox,NULL,screen,&currentBlockPos);
+
+        dynamicObjects[currentBoxId] = currentBlockPos;
+        currentBoxId++;
+
+        free(tempBox);
+      }
+
       //WALL
       if(currentChar == WALL+'0'){
         SDL_Surface *tempWall = IMG_Load("box.png");
         SDL_BlitSurface(tempWall,NULL,screen,&currentBlockPos);
 
         staticObjects[currentWallId] = currentBlockPos;
+        currentWallId++;
 
         free(tempWall);
-        currentWallId++;
       }
 
       //PLAYER
@@ -60,6 +72,7 @@ void LoadLevel(int id,SDL_Surface *screen,SDL_Rect *playerPos,SDL_Rect *staticOb
 
   //SET RETURN VALUES
   *staticObjectsCount = currentWallId;
+  *dynamicObjectsCount = currentBoxId;
 
   fclose(levelFile);
   SDL_Flip(screen);

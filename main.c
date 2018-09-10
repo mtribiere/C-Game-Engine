@@ -12,6 +12,8 @@ int main(int argc, char *argv[])
 	SDL_Rect playerPos;
 	SDL_Rect *staticObjects;
 	int staticObjectsCount = 0;
+	SDL_Rect *dynamicObjects;
+	int dynamicObjectsCount = 0;
 
 	//INIT SDL
 	SDL_Init(SDL_INIT_VIDEO);
@@ -21,14 +23,18 @@ int main(int argc, char *argv[])
 	//INIT STATIC OBJECTS
 	staticObjects = malloc(sizeof(SDL_Rect)*STATIC_MAX_NUMBER);
 
+	//INIT DYNAMIC OBJECTS
+	dynamicObjects = malloc(sizeof(SDL_Rect)*DYNAMIC_MAX_NUMBER);
+
 	//LOAD THE LEVEL
-	LoadLevel(0,screen,&playerPos,staticObjects,&staticObjectsCount);
+	LoadLevel(0,screen,&playerPos,staticObjects,&staticObjectsCount,dynamicObjects,&dynamicObjectsCount);
 
 	//RUN THE GAME
-	PlayGame(screen,playerPos,staticObjects,staticObjectsCount);
+	PlayGame(screen,playerPos,staticObjects,staticObjectsCount,dynamicObjects,dynamicObjectsCount);
 
 	//QUIT
 	free(staticObjects);
+	free(dynamicObjects);
 	SDL_Quit();
 
 	return EXIT_SUCCESS;

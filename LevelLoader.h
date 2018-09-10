@@ -3,6 +3,6 @@
 #include <SDL/SDL.h>
 #include "Constants.h"
 
-  void LoadLevel(int id,SDL_Surface *screen,SDL_Rect *playerPos,SDL_Rect *staticObjects,int *staticObjectsCount);
+  void LoadLevel(int id,SDL_Surface *screen,SDL_Rect *playerPos,SDL_Rect *staticObjects,int *staticObjectsCount,SDL_Rect *dynamicObjects,int *dynamicObjectsCount);
 
 #endif
